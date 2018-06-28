@@ -66,4 +66,5 @@ public class CityModel {
     public void setIs_published(boolean is_published) {
         this.is_published = is_published;
     }
+
 }

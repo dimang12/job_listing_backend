@@ -1,9 +1,9 @@
 package com.job.finalprojectspring2018.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import javax.persistence.*;
 
 @Entity
 @Table (name = "jobs")
@@ -13,8 +13,8 @@ public class JobModel {
     private int id;
     @Column (name = "title")
     private String title;
-    @Column (name = "city")
-    private int city;
+//    @Column (name = "city_id")
+//    private int city;
     @Column (name = "job_type")
     private int jobType;
     @Column (name = "salary")
@@ -26,6 +26,14 @@ public class JobModel {
     @Column (name = "requirement")
     private String requirement;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "city_id")
+    private CityModel cityModel;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id")
+    private CompanyModel companyModel;
+
     public JobModel() {
 
     }
@@ -36,10 +44,6 @@ public class JobModel {
 
     public String getTitle() {
         return title;
-    }
-
-    public int getCity() {
-        return city;
     }
 
     public int getJobType() {
@@ -62,16 +66,20 @@ public class JobModel {
         return requirement;
     }
 
+    public CityModel getCityModel() {
+        return cityModel;
+    }
+
+    public CompanyModel getCompanyModel() {
+        return companyModel;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setCity(int city) {
-        this.city = city;
     }
 
     public void setJobType(int jobType) {
@@ -93,4 +101,17 @@ public class JobModel {
     public void setRequirement(String requirement) {
         this.requirement = requirement;
     }
+
+    public void setCityModel(CityModel cityModel) {
+        this.cityModel = cityModel;
+    }
+
+    public void setCompanyModel(CompanyModel companyModel) {
+        this.companyModel = companyModel;
+    }
+
+//    @Query("FROM jobs WHERE c.Application.id = :applicationId")
+//    List<JobModel> findValidCompialiton(@Param("id") Long applicationId);
+
+
 }
